@@ -6,6 +6,7 @@ const {
   registerSchema,
   loginSchema,
   subscriptionSchema,
+  verifyEmailSchema,
 } = require("../../models/user");
 
 const router = express.Router();
@@ -14,6 +15,14 @@ router.post(
   "/register",
   validation(registerSchema),
   ctrlWrapper(ctrl.register)
+);
+
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
+router.post(
+  "/verify",
+  validation(verifyEmailSchema),
+  ctrlWrapper(ctrl.resendVerifyEmail)
 );
 
 router.post("/login", validation(loginSchema), ctrlWrapper(ctrl.login));
